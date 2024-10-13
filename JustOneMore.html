@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Just One More Paradox</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: url('https://mlrqznsp3lcm.i.optimole.com/w:1024/h:682/q:mauto/ig:avif/https://brainologi.com/wp-content/uploads/2024/04/mathematics-formula-physics-6911748.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+        }
+        #container {
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        input[type="number"] {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin: 10px 0;
+            width: 80px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #results {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        #context {
+            margin-top: 40px;
+            font-size: 14px;
+            line-height: 1.5;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Just One More Paradox</h1>
+        <p>Starting Amount (1-100):</p>
+        <input type="number" id="startingAmount" min="1" max="100" value="10">
+        <button id="simulate">Simulate 1 Million Coins</button>
+        <div id="results"></div>
+    </div>
+
+    <div id="context">
+        <h2>What is the Just One More Paradox?</h2>
+        <p>
+The "Just One More" paradox is a simulation of coin flips that demonstrates the absurdity of probability. A million coins are flipped 50 times, each coin starting with the same arbitrary assigned value. Each time a coin gets flipped heads, its respective value increases by 80%. Everytime it gets flipped tails, its respective value decreases by 50%. At the end of the 50 coin flips, the median and mean values of the entire distribution are measured.         </p>
+    </div>
+
+    <script>
+        document.getElementById('simulate').addEventListener('click', () => {
+            const startingAmount = parseInt(document.getElementById('startingAmount').value);
+            const numCoins = 1000000;
+            const flipsPerCoin = 50;
+            let results = [];
+
+            for (let i = 0; i < numCoins; i++) {
+                let totalAmount = startingAmount;
+
+                for (let j = 0; j < flipsPerCoin; j++) {
+                    const flip = Math.random() < 0.5 ? 'heads' : 'tails'; // 50% chance for heads or tails
+
+                    if (flip === 'heads') {
+                        totalAmount *= 1.8; // Multiply by 1.8 for heads
+                    } else {
+                        totalAmount *= 0.5; // Multiply by 0.5 for tails
+                    }
+                }
+                results.push(totalAmount);
+            }
+
+            const mean = results.reduce((a, b) => a + b, 0) / numCoins;
+            const median = calculateMedian(results);
+
+            document.getElementById('results').innerHTML = 
+                `Mean: $${mean.toFixed(2)}<br>Median: $${median.toFixed(2)}`;
+        });
+
+        function calculateMedian(arr) {
+            arr.sort((a, b) => a - b);
+            const mid = Math.floor(arr.length / 2);
+
+            if (arr.length % 2 === 0) {
+                return (arr[mid - 1] + arr[mid]) / 2;
+            } else {
+                return arr[mid];
+            }
+        }
+    </script>
+</body>
+</html>
